@@ -1,4 +1,4 @@
-import PetsDao from "./dao/pet.dao";
+import PetsDao from "./dao/pet.dao.js";
 export default class PetRepository {
     constructor(){
         this.dao = new PetsDao();

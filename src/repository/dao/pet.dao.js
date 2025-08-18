@@ -1,4 +1,4 @@
-import PetsModel from "../models/pet.model.js";
+import PetsModel from "./models/pet.model.js";
 
 export default class PetsDao {
     async getPets() {
@@ -17,4 +17,5 @@ export default class PetsDao {
     async deletePet(id){
         return await PetsModel.deleteOne({ _id: id });
     }
+
 }

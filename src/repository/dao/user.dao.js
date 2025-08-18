@@ -1,4 +1,4 @@
-import UsersModel from "../models/user.model.js";
+import UsersModel from "./models/user.model.js";
 
 export default class UsersDao {
     async getUsers() {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import MokingController from "../controllers/mocking.controller.js";
+import MokingController from "../controllers/moking.controller.js";
 
 const mokingController = new MokingController();
 const router = Router();

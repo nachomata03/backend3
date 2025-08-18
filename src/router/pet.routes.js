@@ -1,15 +1,18 @@
 import { Router } from "express";
+import PetController from "../controllers/pet.controller.js";
 
 const router = Router();
 
-router.get("/", (req, res) => {});
+const petController = new PetController();
 
-router.get("/:id", (req, res) => {});
+router.get("/", petController.getPets);
 
-router.post('/', (req, res) => {});
+router.get("/:id", petController.getPet);
 
-router.put('/:id', (req, res) => {});
+router.post('/', petController.createPet);
 
-router.delete('/:id', (req, res) => {});
+router.put('/:id', petController.updatePet);
+
+router.delete('/:id', petController.deletePet);
 
 export default router;
