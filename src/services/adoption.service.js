@@ -24,6 +24,7 @@ export default class adoptionService {
 
         async createAdoption(body) {
             try{
+                
                 const result = await this.adoptionRepository.createAdoption(body)
                 return result
             } catch (error) {

@@ -1,11 +1,14 @@
 import { Router } from "express";
+import AdoptionController from "../controllers/adoption.controller.js";
+
+const adoptionController = new AdoptionController();
 
 const router = Router();
 
-router.get("/", (req, res) => {});
+router.get("/", adoptionController.getAdoptions);
 
-router.get("/:id", (req, res) => {});
+router.get("/:id", adoptionController.getAdoption);
 
-router.post('/', (req, res) => {});
+router.post('/', adoptionController.createAdoption);
 
 export default router;

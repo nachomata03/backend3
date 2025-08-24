@@ -1,34 +1,66 @@
 import { mockingPets, mockingUsers } from "../utils/moking.js";
 import { userService, petService } from "../services/index.js";
+import { CustomError, ListErrors } from "../utils/errorManager.js";
 
 export default class MockingController{
     
-    mockingPets = async(req, res) => {
+    mockingPets = async(req, res, next) => {
+        const pets = req.params.pets
         try{
-            const pets = await mockingPets(50); 
-            res.send({ status: 'success', payload: pets });
+            if(isNaN(pets))
+                throw new CustomError(
+                    "El query debe ser de tipo number",
+                    ListErrors.INVALID_TYPES_ERROR,
+                    {   campo: "query", 
+                        detalle: "El query debe ser de tipo number",
+                    }
+                )
+            
+            const payload = await mockingPets(pets); 
+            res.send({ status: 'success', payload});
         }catch(error){
-            const statusCode = error.statusCode || 500;
-            res.status(statusCode).json({ status: 'error', message: error.message });
-        }
-    };
-    mockingUsers = async(req, res) => {
-        try{
-            const users = await mockingUsers(50); 
-            res.send({ status: 'success', payload: users });
-        }catch(error){
-            const statusCode = error.statusCode || 500;
-            res.status(statusCode).json({ status: 'error', message: error.message });
+            next(error)
         }
     };
 
-    generateData = async(req, res) => {
+    mockingUsers = async(req, res, next) => {
+        const users = req.params.users
         try{
-            const pets = await mockingPets(50); 
-            const users = await mockingUsers(50);
+            if(isNaN(users))
+                throw new CustomError(
+                    "El query debe ser de tipo number",
+                    ListErrors.INVALID_TYPES_ERROR,
+                    {   campo: "query", 
+                        detalle: "El query debe ser de tipo number",
+                    }
+                )
+            const payload = await mockingUsers(users); 
+            res.send({ status: 'success', payload });
+        }catch(error){
+            next(error)
+        }
+    };
 
-            await petService.createPet(pets);
-            await userService.createUser(users);
+    generateData = async(req, res, next) => {
+        const pets = req.query.pets;
+        const users = req.query.users;
+        try{
+            if(isNaN(pets) || isNaN(users)){
+                throw new CustomError(
+                    "Los querys deben ser de tipo number",
+                    ListErrors.INVALID_TYPES_ERROR,
+                    {   
+                        campo: "query", 
+                        detalle: "Los querys deben ser de tipo number",
+                    }
+                )
+            }
+
+            const mokingPets = await mockingPets(pets); 
+            const mokingUsers = await mockingUsers(users);
+
+            await petService.createPet(mokingPets);
+            await userService.createUser(mokingUsers);
 
             const payload = {
                 pets: await petService.getPets(),
@@ -36,8 +68,7 @@ export default class MockingController{
             }
             res.send({ status: 'success', payload });
         }catch(error){
-            const statusCode = error.statusCode || 500;
-            res.status(statusCode).json({ status: 'error', message: error.message });
+            next(error)
         }
     }
 }

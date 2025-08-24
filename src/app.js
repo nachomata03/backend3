@@ -2,6 +2,7 @@ import express from "express";
 import indexRouter from "./router/index.routes.js";
 import config from "./config/config.js";
 import mongoose from 'mongoose';
+import {errorHandle} from "./utils/errorManager.js"
 
 const app = express();
 
@@ -34,5 +35,7 @@ if( STORAGE === 'MONGO' ) {
 
 
 app.use('/api', indexRouter)
+
+app.use(errorHandle);
 
 export default app

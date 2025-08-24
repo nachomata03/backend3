@@ -10,7 +10,6 @@ export const mockingUsers = async(num) => {
                 last_name: faker.person.lastName(),
                 email: faker.internet.email(),
                 password: await createHash("coder123"),
-                password: faker.internet.password(),
                 role: faker.helpers.arrayElement(["admin", "user"])
             })
     }
