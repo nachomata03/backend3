@@ -1,0 +1,187 @@
+paths:
+  /api/users:
+    get:
+      tags:
+        - Users
+      summary: Obtiene todos los usuarios
+      responses:
+        '200':
+          description: Lista de usuarios obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+
+    post:
+      tags:
+        - Users
+      summary: Crea un nuevo usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '201':
+          description: Usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/User'
+
+  /api/users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Obtiene un usuario por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      responses:
+        '200':
+          description: Usuario encontrado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/User'
+        '404':
+          description: Usuario no encontrado
+
+    put:
+      tags:
+        - Users
+      summary: Actualiza un usuario por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID del usuario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInput'
+      responses:
+        '200':
+          description: Usuario actualizado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/User'
+
+    delete:
+      tags:
+        - Users
+      summary: Elimina un usuario por ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Usuario eliminado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Usuario eliminado
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64b1e5c2f8d2a8f6a3c1e5a1
+        first_name:
+          type: string
+          example: Juan
+        last_name:
+          type: string
+          example: Pérez
+        email:
+          type: string
+          example: juanperez@mail.com
+        password:
+          type: string
+          example: $2b$10$abcdefgHashedPassword
+        role:
+          type: string
+          example: user
+        pets:
+          type: array
+          items:
+            type: string
+            example: 64b1e5c2f8d2a8f6a3c1e5b2
+
+    UserInput:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - email
+        - password
+      properties:
+        first_name:
+          type: string
+          example: Juan
+        last_name:
+          type: string
+          example: Pérez
+        email:
+          type: string
+          example: juanperez@mail.com
+        password:
+          type: string
+          example: 123456
+        role:
+          type: string
+          example: user
+        pets:
+          type: array
+          items:
+            type: string
+            example: 64b1e5c2f8d2a8f6a3c1e5b2

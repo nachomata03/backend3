@@ -1,0 +1,133 @@
+paths:
+  /api/mockingpets/{pets}:
+    get:
+      tags:
+        - Mocks
+      summary: Genera mascotas de prueba (mocking)
+      description: Retorna un array de mascotas generadas con datos falsos para pruebas.
+      parameters:
+        - name: pets
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Cantidad de mascotas mock a generar
+          example: 5
+      responses:
+        '200':
+          description: Lista de mascotas mock generadas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MockPet'
+
+  /api/mockingusers/{users}:
+    get:
+      tags:
+        - Mocks
+      summary: Genera usuarios de prueba (mocking)
+      description: Retorna un array de usuarios generados con datos falsos para pruebas.
+      parameters:
+        - name: users
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Cantidad de usuarios mock a generar
+          example: 10
+      responses:
+        '200':
+          description: Lista de usuarios mock generados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MockUser'
+
+  /api/generateData:
+    post:
+      tags:
+        - Mocks
+      summary: Genera datos de prueba en bloque
+      description: Inserta en la base de datos un conjunto de usuarios y mascotas mock.
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                users:
+                  type: integer
+                  example: 20
+                pets:
+                  type: integer
+                  example: 50
+      responses:
+        '201':
+          description: Datos mock generados correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Se generaron 20 usuarios y 50 mascotas
+
+
+components:
+  schemas:
+    MockPet:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Firulais"
+        specie:
+          type: string
+          example: "dog"
+        birthDate:
+          type: string
+          format: date
+          example: "2022-01-01"
+        adopted:
+          type: boolean
+          example: false
+        image:
+          type: string
+          example: "https://faker.image.url/dog.png"
+
+    MockUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          example: "Juan"
+        last_name:
+          type: string
+          example: "Pérez"
+        email:
+          type: string
+          example: "juanperez@mail.com"
+        role:
+          type: string
+          example: "user"

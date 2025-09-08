@@ -1,0 +1,190 @@
+paths:
+  /api/pets:
+    get:
+      tags:
+        - Pets
+      summary: Obtener todas las mascotas
+      responses:
+        '200':
+          description: Lista de mascotas obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Pet'
+
+    post:
+      tags:
+        - Pets
+      summary: Crear una nueva mascota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetInput'
+      responses:
+        '201':
+          description: Mascota creada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/Pet'
+
+  /api/pets/{id}:
+    get:
+      tags:
+        - Pets
+      summary: Obtener una mascota por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota
+      responses:
+        '200':
+          description: Mascota encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/Pet'
+        '404':
+          description: Mascota no encontrada
+
+    put:
+      tags:
+        - Pets
+      summary: Actualizar una mascota por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PetInput'
+      responses:
+        '200':
+          description: Mascota actualizada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/Pet'
+        '404':
+          description: Mascota no encontrada
+
+    delete:
+      tags:
+        - Pets
+      summary: Eliminar una mascota por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la mascota
+      responses:
+        '200':
+          description: Mascota eliminada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Mascota eliminada
+        '404':
+          description: Mascota no encontrada
+
+components:
+  schemas:
+    Pet:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64bfa90e83b4c20012f8a1c3
+        name:
+          type: string
+          example: Firulais
+        specie:
+          type: string
+          example: dog
+        birthDate:
+          type: string
+          format: date
+          example: 2021-06-15
+        adopted:
+          type: boolean
+          example: false
+        owner:
+          type: string
+          description: ID del usuario dueño de la mascota
+          example: 64bfa90e83b4c20012f8a1c4
+        image:
+          type: string
+          example: https://miservidor.com/fotos/firulais.png
+
+    PetInput:
+      type: object
+      required:
+        - name
+        - specie
+      properties:
+        name:
+          type: string
+          example: Manchitas
+        specie:
+          type: string
+          example: cat
+        birthDate:
+          type: string
+          format: date
+          example: 2022-01-20
+        adopted:
+          type: boolean
+          example: true
+        owner:
+          type: string
+          description: ID del usuario dueño de la mascota
+          example: 64bfa90e83b4c20012f8a1c4
+        image:
+          type: string
+          example: https://miservidor.com/fotos/manchitas.png

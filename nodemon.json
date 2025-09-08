@@ -1,0 +1,7 @@
+{
+    "ext": "js, yml, yaml",
+    "ignore": [
+        "*.json",
+        "node_modules"
+    ]
+}

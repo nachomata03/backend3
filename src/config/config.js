@@ -25,7 +25,8 @@ dotenv.config({ path: envPath });
 const config = {
     PORT : process.env.PORT,
     MONGO_URI : process.env.MONGO_URI,
-    STORAGE : process.env.STORAGE
+    STORAGE : process.env.STORAGE,
+    MODE: mode
 }
 
 export default config

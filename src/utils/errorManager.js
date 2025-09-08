@@ -1,4 +1,5 @@
-import logger from "./logger.js";
+import {logger} from "../config/logger.js";
+import chalk from "chalk";
 
 export const ListErrors = {
     ROUTING_ERROR: 404,        // Recurso no encontrado
@@ -18,11 +19,11 @@ export const ListErrors = {
 };
 
 export function errorHandle(error, req, res, next) {
-    logger.debug("Error capturado por el middleware:");
+    logger.info("Error capturado por el middleware:");
     let statusCode = error.code && typeof error.code === "number" ? error.code : 500;
 
     if (error) {
-        logger.debug("Error controlado:");
+        logger.info("Error controlado:");
         logger.warn(`Mensaje: ${error.message}`);
         logger.warn(`Causa: ${JSON.stringify(error.cause, null, 2)}`);
         logger.error(`Stack trace: ${error.origin}`);
