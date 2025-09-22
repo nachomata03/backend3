@@ -1,5 +1,5 @@
 import {logger} from "../config/logger.js";
-import chalk from "chalk";
+
 
 export const ListErrors = {
     ROUTING_ERROR: 404,        // Recurso no encontrado
@@ -26,7 +26,7 @@ export function errorHandle(error, req, res, next) {
         logger.info("Error controlado:");
         logger.warn(`Mensaje: ${error.message}`);
         logger.warn(`Causa: ${JSON.stringify(error.cause, null, 2)}`);
-        logger.error(`Stack trace: ${error.origin}`);
+        logger.error(`Stack trace: ${error.origin || error.stack}`);
         res.setHeader("Content-Type", "application/json");
 
         return res.status(statusCode).json({

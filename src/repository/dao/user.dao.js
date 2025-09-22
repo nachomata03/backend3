@@ -8,11 +8,19 @@ export default class UsersDao {
         return await UsersModel.findById(id);
     }
 
+    async getUserByEmail(email) {
+        return await UsersModel.findOne({ email: email });
+    }
+
     async createUser(body){
         return await UsersModel.create(body);
     }
     async updateUser(id, body){
         return await UsersModel.updateOne({ _id: id }, { $set: body });
+    }
+
+    async updateUserPush(id, body){
+        return await UsersModel.updateOne({ _id: id }, { $push: body });
     }
     async deleteUser(id){
         return await UsersModel.deleteOne({ _id: id });

@@ -1,20 +1,23 @@
 import AdoptionModels from "./models/adoption.model.js";
 
 export default class AdoptionDao {
-    async getUsers() {
-        return await AdoptionModels.find();
+    async getAdoptions() {
+        return await AdoptionModels.find().populate('owner').populate('pet');
     }
-    async getUser(id){
-        return await AdoptionModels.findById(id);
+    async getAdoption(id){
+        return await AdoptionModels.findById(id).populate('owner').populate('pet');
     }
 
-    async createUser(body){
-        return await AdoptionModels.create(body);
+    async createAdoption(uid, pid){
+        return await AdoptionModels.create({
+        owner: uid,
+        pet: pid
+    });
     }
-    async updateUser(id, body){
+    async updateAdoption(id, body){
         return await AdoptionModels.updateOne({ _id: id }, { $set: body });
     }
-    async deleteUser(id){
+    async deleteAdoption(id){
         return await AdoptionModels.deleteOne({ _id: id });
     }
 }

@@ -24,17 +24,12 @@ const schema = new mongoose.Schema({
         type:String,
         default:'user'
     },
-    pets:{
-        type:[
-            {
-                _id:{
-                    type:mongoose.SchemaTypes.ObjectId,
-                    ref:'pets'
-                }
-            }
-        ],
-        default:[]
-    }
+    pets:[
+        {
+            type: mongoose.SchemaTypes.ObjectId,
+            ref:'pets'
+        }
+    ]
 })
 
 const userModel = mongoose.model(collection,schema);

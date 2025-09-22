@@ -6,6 +6,9 @@ export default class UserController {
     async getUsers(req, res) {
             try{
                 const result = await userService.getUsers()
+
+                if(!result) throw new CustomError("No se encontraron usuarios", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se encontraron usuarios"})
+
                 res.json({status: 'success', response: result})
             } catch (error) {
                 throw error
@@ -23,6 +26,10 @@ export default class UserController {
                     }
                 )}
                 const result = await userService.getUser(id)
+
+                if(!result) throw new CustomError("No se encontro el usuario", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se encontro el usuario"}
+
+                )
                 res.json({status: 'success', response: result})
             } catch (error) {
                 next(error)
@@ -38,6 +45,9 @@ export default class UserController {
                     {campo: "body", detalle: "El body no puede estar vacio"}
                 )
                 const result = await userService.createUser(body)
+
+                if(!result) throw new CustomError("No se pudo crear el usuario", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se pudo crear el usuario"})
+
                 res.status(201).json({ status: 'success', response: result });
             } catch (error) {
                 next(error)
@@ -61,6 +71,9 @@ export default class UserController {
                     }
                 )}
                 const result = await userService.updateUser(id, body);
+
+                if(!result) throw new CustomError("No se pudo actualizar el usuario", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se pudo actualizar el usuario"})
+
                 res.json({ status: 'success', response: result });
             } catch (error) {
                 next(error)
@@ -78,6 +91,9 @@ export default class UserController {
                     }
                 )}
                 const result = await userService.deleteUser(id)
+
+                if(!result) throw new CustomError("No se pudo eliminar el usuario", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se pudo eliminar el usuario"})
+
                 res.json({status: 'success', response: result})
             }catch(error){
                 next(error)

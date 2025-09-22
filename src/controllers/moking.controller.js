@@ -55,12 +55,11 @@ export default class MockingController{
                     }
                 )
             }
-
-            const mokingPets = await mockingPets(pets); 
-            const mokingUsers = await mockingUsers(users);
-
-            await petService.createPet(mokingPets);
-            await userService.createUser(mokingUsers);
+        
+            const Pets = await mockingPets(pets); 
+            const Users = await mockingUsers(users, false);
+            await petService.createPet(Pets);
+            await userService.createUser(Users);
 
             const payload = {
                 pets: await petService.getPets(),

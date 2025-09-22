@@ -10,8 +10,8 @@ export default class AdoptionRepository {
         return await this.dao.getAdoption(id);
     }
 
-    async createAdoption(body){
-        return await this.dao.createAdoption(body);
+    async createAdoption(uid, pid){
+        return await this.dao.createAdoption(uid, pid);
     }
     async updateAdoption(id, body){
         return await this.dao.updateAdoption(id, body);

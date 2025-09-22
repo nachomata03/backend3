@@ -14,7 +14,10 @@ import { fileURLToPath } from 'url';
 
 import cors from "cors";
 
+import passport from "passport";
+import initializePassport from "./config/index.js";
 
+import cookieParser from "cookie-parser";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -77,7 +80,6 @@ const numCPUs = TotalCPUs - 10;
     console.log(`Servidor de desarrollo escuchando en puerto http://localhost:${PORT}`);
 });
 
-console.log (path.join(__dirname, "./docs/*.yaml"))
 const swaggerOptions = {
     definition: {
         openapi: "3.0.0",
@@ -107,9 +109,11 @@ app.use(cors());
 
 app.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
-app.use('/api', indexRouter)
+app.use(cookieParser());
+initializePassport();
+app.use(passport.initialize());
 
-console.log()
+app.use('/api', indexRouter)
 
 app.use(errorHandle);
 

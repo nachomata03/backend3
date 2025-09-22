@@ -26,7 +26,8 @@ const config = {
     PORT : process.env.PORT,
     MONGO_URI : process.env.MONGO_URI,
     STORAGE : process.env.STORAGE,
-    MODE: mode
+    MODE: mode,
+    JWT_SECRET: process.env.JWT_SECRET
 }
 
 export default config

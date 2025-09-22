@@ -1,14 +1,17 @@
+import { ne } from "@faker-js/faker";
 import { petService } from "../services/index.js";
 
 export default class PetController {
 
-    async getPets(req, res) {
+    async getPets(req, res, next) {
         try{
             const result = await petService.getPets()
+            
+            if(!result) throw new CustomError("No se encontraron mascotas", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se encontraron mascotas"})
+
             res.json({status: 'success', response: result})
         }catch(error){
-            const statusCode = error.statusCode || 500;
-            res.status(statusCode).json({ status: 'error', message: error.message });
+            next(error)
         }
     }
 
@@ -23,6 +26,9 @@ export default class PetController {
                 }
             )}
             const result = await petService.getPet(id)
+
+            if(!result) throw new CustomError("No se encontro la mascota", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se encontro la mascota"})
+
             res.json({status: 'success', response: result})
         }catch(error){
             next(error)
@@ -38,6 +44,9 @@ export default class PetController {
                 {campo: "body", detalle: "El body no puede estar vacio"}
             )
             const result = await petService.createPet(body)
+
+            if(!result) throw new CustomError("No se pudo crear la mascota", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se pudo crear la mascota"})
+
             res.status(201).json({ status: 'success', response: result });
         }catch(error){
             next(error)
@@ -61,6 +70,9 @@ export default class PetController {
                 }
             )}
             const result = await petService.updatePet(id, body)
+
+            if(!result) throw new CustomError("No se pudo actualizar la mascota", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se pudo actualizar la mascota"})
+
             res.json({ status: 'success', response: result });
         }catch(error){
             next(error)
@@ -78,6 +90,9 @@ export default class PetController {
                 }
             )}
             const result = await petService.deletePet(id)
+
+            if(!result) throw new CustomError("No se pudo eliminar la mascota", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se pudo eliminar la mascota"})
+
             res.json({status: 'success', response: result})
         }catch(error){
             next(error)

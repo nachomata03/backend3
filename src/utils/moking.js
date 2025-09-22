@@ -1,7 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { createHash } from "./utils.js";
 
-export const mockingUsers = async(num) => {
+export const mockingUsers = async(num, hashed = true) => {
     try{
         const user = [];
         for(let i = 0; i < num; i++){
@@ -9,7 +9,7 @@ export const mockingUsers = async(num) => {
                 first_name: faker.person.firstName(),
                 last_name: faker.person.lastName(),
                 email: faker.internet.email(),
-                password: await createHash("coder123"),
+                password: hashed ? await createHash("coder123"): "coder123",
                 role: faker.helpers.arrayElement(["admin", "user"])
             })
     }
