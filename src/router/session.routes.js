@@ -8,7 +8,7 @@ const router = Router();
 const sessionController = new SessionController();
 const userController = new UserController();
 
-router.get("/logout", sessionController.logOut);
+router.get("/logout", passport.authenticate("jwt", { session: false }), sessionController.logOut);
 
 router.post('/login', sessionController.loginUser);
 

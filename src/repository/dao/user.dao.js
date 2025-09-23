@@ -25,4 +25,8 @@ export default class UsersDao {
     async deleteUser(id){
         return await UsersModel.deleteOne({ _id: id });
     }
+
+    async uploadDocuments(id, files) {
+        return await UsersModel.updateOne({ _id: id }, { $push: { documents: files } });
+    }
 }

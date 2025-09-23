@@ -10,6 +10,8 @@ const {JWT_SECRET} = config
 export default class SessionController {
 
     async logOut(req, res) {
+        logger.info(`El usuario ${req.user.email} se ha deslogueado`);
+        await userService.updateUser(req.user.id, {last_connection: new Date()});
         res.clearCookie('access_token');
         res.redirect('/api/sessions/login');
     }
@@ -43,6 +45,9 @@ export default class SessionController {
                 )
             }
             
+            user.last_connection = new Date();
+
+            await userService.updateUser(user._id, user);
 
             const token = await jwt.sign(
                 {id: user._id, email: user.email, role: user.role},

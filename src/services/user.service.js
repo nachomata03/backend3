@@ -69,4 +69,18 @@ export default class UserService {
                 throw error
             }
         }
+
+        async uploadDocuments(id, files) {
+            try{
+                const newDocs = files.map(file => ({
+                    name: file.originalname,
+                    reference: file.path
+                }));
+
+                const result = await this.userRepository.uploadDocuments(id, newDocs)
+                return result
+            } catch (error) {
+                throw error
+            }
+        }
 }

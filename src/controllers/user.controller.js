@@ -99,4 +99,34 @@ export default class UserController {
                 next(error)
             }
         }    
+
+        async uploadDocuments(req, res, next){
+            const id = req.params.id;
+            const files = req.files;
+            try{
+                if(!files || files.length === 0) throw new CustomError(
+                    "El body no puede estar vacio", 
+                    ListErrors.INVALID_TYPES_ERROR, 
+                    {campo: "body", detalle: "El body no puede estar vacio"}
+                )
+                if(!mongoose.Types.ObjectId.isValid(id)) {throw new CustomError(
+                    "El id debe ser de tipo string",
+                    ListErrors.INVALID_TYPES_ERROR,
+                    {   campo: "id", 
+                        detalle: "El id debe ser de tipo string",
+                    }
+                )}
+
+                const user = await userService.getUser(id)
+                if(!user) throw new CustomError("No se encontro el usuario", ListErrors.ROUTING_ERROR, {campo: "user", detalle: "No se encontro el usuario"})
+        
+                const result = await userService.uploadDocuments(id, files)
+                
+                if(!result) throw new CustomError("No se pudo actualizar el usuario", ListErrors.ROUTING_ERROR, {campo: "result", detalle: "No se pudo actualizar el usuario"})
+
+                res.json({status: 'success', response: result})
+            }catch{
+                next(error)
+            }
+        }
 }

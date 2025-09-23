@@ -1,4 +1,4 @@
-/* import { expect } from "chai";
+import { expect } from "chai";
 import config from "../src/config/config.js";
 import mongoose from "mongoose";
 import { mockingUsers } from "../src/utils/moking.js";
@@ -80,4 +80,4 @@ describe("Test unitarios para CRUD de usuarios.", function() {
         const result = await usersDao.getUser(createdUser._id);
         expect(result).to.be.null;
     });
-}); */
+});

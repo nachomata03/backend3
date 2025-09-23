@@ -28,4 +28,8 @@ export default class UsersRepository {
         return await this.dao.deleteUser(id);
     }
 
+    async uploadDocuments(id, files){
+        return await this.dao.uploadDocuments(id, files);
+    }
+
 }

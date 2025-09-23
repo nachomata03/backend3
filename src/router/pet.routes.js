@@ -1,5 +1,6 @@
 import { Router } from "express";
 import PetController from "../controllers/pet.controller.js";
+import { uploader } from "../utils/multer.js";
 
 const router = Router();
 
@@ -14,5 +15,7 @@ router.post('/', petController.createPet);
 router.put('/:id', petController.updatePet);
 
 router.delete('/:id', petController.deletePet);
+
+router.post("/withImage", uploader.single("image"), petController.createPetWithImage);
 
 export default router;
