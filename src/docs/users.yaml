@@ -1,9 +1,20 @@
+
+
+
+
+
+
+
+
+
+
+
 paths:
   /api/users:
     get:
       tags:
         - Users
-      summary: Obtiene todos los usuarios
+      summary: Obtener todos los usuarios
       responses:
         '200':
           description: Lista de usuarios obtenida correctamente
@@ -23,7 +34,7 @@ paths:
     post:
       tags:
         - Users
-      summary: Crea un nuevo usuario
+      summary: Crear un nuevo usuario
       requestBody:
         required: true
         content:
@@ -32,7 +43,7 @@ paths:
               $ref: '#/components/schemas/UserInput'
       responses:
         '201':
-          description: Usuario creado exitosamente
+          description: Usuario creado correctamente
           content:
             application/json:
               schema:
@@ -48,10 +59,10 @@ paths:
     get:
       tags:
         - Users
-      summary: Obtiene un usuario por ID
+      summary: Obtener un usuario por ID
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           required: true
           schema:
             type: string
@@ -75,10 +86,10 @@ paths:
     put:
       tags:
         - Users
-      summary: Actualiza un usuario por ID
+      summary: Actualizar un usuario por ID
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           required: true
           schema:
             type: string
@@ -102,17 +113,20 @@ paths:
                     example: success
                   response:
                     $ref: '#/components/schemas/User'
+        '404':
+          description: Usuario no encontrado
 
     delete:
       tags:
         - Users
-      summary: Elimina un usuario por ID
+      summary: Eliminar un usuario por ID
       parameters:
-        - name: id
-          in: path
+        - in: path
+          name: id
           required: true
           schema:
             type: string
+          description: ID del usuario
       responses:
         '200':
           description: Usuario eliminado correctamente
@@ -127,6 +141,8 @@ paths:
                   message:
                     type: string
                     example: Usuario eliminado
+        '404':
+          description: Usuario no encontrado
 
 components:
   schemas:
@@ -135,7 +151,7 @@ components:
       properties:
         _id:
           type: string
-          example: 64b1e5c2f8d2a8f6a3c1e5a1
+          example: 64bfa90e83b4c20012f8a1c4
         first_name:
           type: string
           example: Juan
@@ -145,9 +161,6 @@ components:
         email:
           type: string
           example: juanperez@mail.com
-        password:
-          type: string
-          example: $2b$10$abcdefgHashedPassword
         role:
           type: string
           example: user
@@ -155,7 +168,25 @@ components:
           type: array
           items:
             type: string
-            example: 64b1e5c2f8d2a8f6a3c1e5b2
+            example: 64bfa90e83b4c20012f8a1c3
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Tipo o nombre del documento
+                example: DNI
+              reference:
+                type: string
+                description: Ubicación o referencia del documento
+                example: "public/documents/dni_juanperez.pdf"
+        last_connection:
+          type: string
+          format: date-time
+          nullable: true
+          example: 2025-09-22T21:00:00Z
 
     UserInput:
       type: object
@@ -176,7 +207,7 @@ components:
           example: juanperez@mail.com
         password:
           type: string
-          example: 123456
+          example: secret123
         role:
           type: string
           example: user
@@ -184,4 +215,22 @@ components:
           type: array
           items:
             type: string
-            example: 64b1e5c2f8d2a8f6a3c1e5b2
+            example: 64bfa90e83b4c20012f8a1c3
+        documents:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Tipo o nombre del documento
+                example: DNI
+              reference:
+                type: string
+                description: Ubicación o referencia del documento
+                example: "public/documents/dni_juanperez.pdf"
+        last_connection:
+          type: string
+          format: date-time
+          nullable: true
+          example: 2025-09-22T21:00:00Z

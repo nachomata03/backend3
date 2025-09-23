@@ -1,0 +1,167 @@
+paths:
+  /api/adoptions:
+    get:
+      tags:
+        - Adoptions
+      summary: Obtener todas las adopciones
+      description: Retorna un array con todas las adopciones registradas.
+      responses:
+        '200':
+          description: Lista de adopciones obtenida correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Adoption'
+
+    post:
+      tags:
+        - Adoptions
+      summary: Crear una nueva adopción
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdoptionInput'
+      responses:
+        '201':
+          description: Adopción creada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/Adoption'
+
+  /api/adoptions/{id}:
+    get:
+      tags:
+        - Adoptions
+      summary: Obtener una adopción por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la adopción
+      responses:
+        '200':
+          description: Adopción encontrada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/Adoption'
+        '404':
+          description: Adopción no encontrada
+
+    put:
+      tags:
+        - Adoptions
+      summary: Actualizar una adopción por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la adopción
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdoptionInput'
+      responses:
+        '200':
+          description: Adopción actualizada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  response:
+                    $ref: '#/components/schemas/Adoption'
+        '404':
+          description: Adopción no encontrada
+
+    delete:
+      tags:
+        - Adoptions
+      summary: Eliminar una adopción por ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: ID de la adopción
+      responses:
+        '200':
+          description: Adopción eliminada correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Adopción eliminada
+        '404':
+          description: Adopción no encontrada
+
+components:
+  schemas:
+    Adoption:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64bfa90e83b4c20012f8a1c5
+        owner:
+          type: string
+          description: ID del usuario que adopta
+          example: 64bfa90e83b4c20012f8a1c4
+        pet:
+          type: string
+          description: ID de la mascota adoptada
+          example: 64bfa90e83b4c20012f8a1c3
+
+    AdoptionInput:
+      type: object
+      required:
+        - owner
+        - pet
+      properties:
+        owner:
+          type: string
+          description: ID del usuario que adopta
+          example: 64bfa90e83b4c20012f8a1c4
+        pet:
+          type: string
+          description: ID de la mascota adoptada
+          example: 64bfa90e83b4c20012f8a1c3

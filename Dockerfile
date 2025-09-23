@@ -6,16 +6,22 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY ./src ./src
+#COPY ./src ./src
+
+COPY . .
 
 EXPOSE 8080
 
 CMD [ "npm", "start" ]
 
 #docker build -t backend3 .
-#docker run -p 8080:8080 --name backend3-container backend3-prueba
-#docker stop backend3-container
-#docker rm backend3-container
+#docker run -p 8080:8080 backend3
+#docker stop backend3
+#docker rm backend3
+
+#docker logs <container_id>
+#docker ps -a #ver todos los contenedores
+
 
 
 
